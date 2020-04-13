@@ -1,0 +1,8 @@
+quarkus:
+  vertx:
+    prefer-native-transport: true
+#  smallrye-jwt:
+#    enabled: true
+  mongodb:
+    connection-string: mongodb://rchat123:rchat123@localhost:27017
+    database: rchat
