@@ -19,8 +19,8 @@ import org.jboss.resteasy.annotations.jaxrs.PathParam;
 import org.jboss.resteasy.annotations.jaxrs.QueryParam;
 import org.wildfly.common.annotation.Nullable;
 
-import static com.github.cssrumi.rchat.user.model.UserConstants.DELETE_USER_TOPIC;
-import static com.github.cssrumi.rchat.user.model.UserConstants.REGISTER_USER_TOPIC;
+import static com.github.cssrumi.rchat.model.TopicConstants.DELETE_USER_TOPIC;
+import static com.github.cssrumi.rchat.model.TopicConstants.REGISTER_USER_TOPIC;
 
 @Path("/v1/user")
 @Produces(MediaType.APPLICATION_JSON)

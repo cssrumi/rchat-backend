@@ -9,8 +9,8 @@ import io.vertx.mutiny.core.eventbus.EventBus;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
-import static com.github.cssrumi.rchat.user.model.UserConstants.USER_CREATED_TOPIC;
-import static com.github.cssrumi.rchat.user.model.UserConstants.USER_DELETED_TOPIC;
+import static com.github.cssrumi.rchat.model.TopicConstants.USER_CREATED_TOPIC;
+import static com.github.cssrumi.rchat.model.TopicConstants.USER_DELETED_TOPIC;
 
 @ApplicationScoped
 public class UserEventHandler {

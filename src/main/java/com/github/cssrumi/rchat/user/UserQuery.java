@@ -1,7 +1,6 @@
 package com.github.cssrumi.rchat.user;
 
 import com.github.cssrumi.rchat.user.dto.UserInfo;
-import com.github.cssrumi.rchat.user.model.UserConverter;
 import io.smallrye.mutiny.Uni;
 import java.util.List;
 import java.util.stream.Collectors;

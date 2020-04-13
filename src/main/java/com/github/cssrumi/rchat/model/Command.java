@@ -2,9 +2,9 @@ package com.github.cssrumi.rchat.model;
 
 import java.time.OffsetDateTime;
 
-public class Command extends Event {
+public abstract class Command<P extends Payload> extends Event<P> {
 
-    public Command(OffsetDateTime dateTime, Payload payload, String eventType) {
+    public Command(OffsetDateTime dateTime, P payload, String eventType) {
         super(dateTime, payload, eventType);
     }
 }

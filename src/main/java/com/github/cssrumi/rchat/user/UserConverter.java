@@ -1,8 +1,12 @@
-package com.github.cssrumi.rchat.user.model;
+package com.github.cssrumi.rchat.user;
 
 import com.github.cssrumi.rchat.user.dto.UserInfo;
+import com.github.cssrumi.rchat.user.model.User;
 
 public class UserConverter {
+
+    private UserConverter() {
+    }
 
     public static UserInfo toUserInfo(User user) {
         UserInfo userInfo = new UserInfo();
