@@ -22,7 +22,7 @@ public class UserEventFactory implements EventFactory<User> {
             return deleted((DeleteUser) command);
         }
 
-        throw new RuntimeException("Command not found for: " + command);
+        throw new RuntimeException("Command not found: " + command);
     }
 
     private UserCreated created(RegisterUser command) {

@@ -1,10 +1,17 @@
 package com.github.cssrumi.rchat.message.dto;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 public class MessageDto {
 
-    String sendBy;
-    Long sendAt;
-    String message;
-    String channel;
+    @NotEmpty
+    public String sendBy;
+    @NotNull
+    public Long sendAt;
+    @NotEmpty
+    public String message;
+    @NotEmpty
+    public String channel;
 
 }

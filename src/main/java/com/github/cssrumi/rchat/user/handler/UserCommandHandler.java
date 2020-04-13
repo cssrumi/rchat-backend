@@ -38,20 +38,20 @@ class UserCommandHandler extends CommandHandler<User> {
     }
 
     @ConsumeEvent(REGISTER_USER_TOPIC)
-    Uni<Void> registerUserHandler(RegisterUser registerUserCommand) {
-        final RegisterUserPayload payload = registerUserCommand.getPayload();
+    Uni<Void> registerUserHandler(RegisterUser command) {
+        final RegisterUserPayload payload = command.getPayload();
         return userRepository.isUserExist(payload.username)
                              .and(userRepository.isEmailExist(payload.email))
                              .map(result -> createUser(result, payload))
                              .onItem().produceUni(user -> userRepository.persist(user))
-                             .onItem().produceUni(result -> sendEvent(USER_CREATED_TOPIC, registerUserCommand, eventFactory));
+                             .onItem().produceUni(result -> sendEvent(USER_CREATED_TOPIC, command, eventFactory));
     }
 
     @ConsumeEvent(DELETE_USER_TOPIC)
-    Uni<Void> deleteUserHandler(DeleteUser deleteUserCommand) {
-        return userRepository.findByUsername(deleteUserCommand.getPayload().username)
+    Uni<Void> deleteUserHandler(DeleteUser command) {
+        return userRepository.findByUsername(command.getPayload().username)
                              .onItem().produceUni(user -> userRepository.delete(user))
-                             .onItem().produceUni(result -> sendEvent(USER_DELETED_TOPIC, deleteUserCommand, eventFactory));
+                             .onItem().produceUni(result -> sendEvent(USER_DELETED_TOPIC, command, eventFactory));
     }
 
     User createUser(Tuple2<Boolean, Boolean> usernameAndEmailExists, RegisterUserPayload payload) {

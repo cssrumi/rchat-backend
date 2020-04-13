@@ -27,7 +27,7 @@ public class ChannelEventFactory implements EventFactory<Channel> {
             return channelStatusChanged((ChangeChannelStatus) command);
         }
 
-        return null;
+        throw new RuntimeException("Command not found: " + command);
     }
 
     private ChannelCreated channelCreated(CreateChannel command) {
