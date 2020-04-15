@@ -1,6 +1,6 @@
 package com.github.cssrumi.rchat.message.model;
 
-import com.github.cssrumi.rchat.model.Payload;
+import com.github.cssrumi.rchat.common.Payload;
 
 public class MessagePayload implements Payload {
 
@@ -9,4 +9,13 @@ public class MessagePayload implements Payload {
     public String message;
     public String channel;
 
+    @Override
+    public String toString() {
+        return "MessagePayload{" +
+                "sendBy='" + sendBy + '\'' +
+                ", sendAt=" + sendAt +
+                ", message='" + message + '\'' +
+                ", channel='" + channel + '\'' +
+                '}';
+    }
 }

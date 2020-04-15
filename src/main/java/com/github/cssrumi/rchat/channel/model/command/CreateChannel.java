@@ -1,7 +1,7 @@
 package com.github.cssrumi.rchat.channel.model.command;
 
 import com.github.cssrumi.rchat.channel.model.payload.ChannelPayload;
-import com.github.cssrumi.rchat.model.Command;
+import com.github.cssrumi.rchat.common.Command;
 import java.time.OffsetDateTime;
 
 public class CreateChannel extends Command<ChannelPayload> {

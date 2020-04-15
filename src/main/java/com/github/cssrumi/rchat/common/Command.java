@@ -1,4 +1,4 @@
-package com.github.cssrumi.rchat.model;
+package com.github.cssrumi.rchat.common;
 
 import java.time.OffsetDateTime;
 

@@ -1,6 +1,7 @@
-package com.github.cssrumi.rchat.message.model;
+package com.github.cssrumi.rchat.message.model.command;
 
 import com.github.cssrumi.rchat.message.dto.MessageDto;
+import com.github.cssrumi.rchat.message.model.MessagePayload;
 import java.time.OffsetDateTime;
 
 public class MessageCommandFactory {

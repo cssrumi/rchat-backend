@@ -1,7 +1,7 @@
 package com.github.cssrumi.rchat.channel.model.payload;
 
 import com.github.cssrumi.rchat.channel.model.ChannelStatus;
-import com.github.cssrumi.rchat.model.Payload;
+import com.github.cssrumi.rchat.common.Payload;
 
 public class ChannelStatusPayload implements Payload {
 

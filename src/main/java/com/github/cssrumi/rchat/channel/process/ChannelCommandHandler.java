@@ -1,14 +1,13 @@
-package com.github.cssrumi.rchat.channel.handler;
+package com.github.cssrumi.rchat.channel.process;
 
-import com.github.cssrumi.rchat.channel.ChannelRepository;
 import com.github.cssrumi.rchat.channel.model.Channel;
 import com.github.cssrumi.rchat.channel.model.ChannelStatus;
 import com.github.cssrumi.rchat.channel.model.command.ChangeChannelStatus;
 import com.github.cssrumi.rchat.channel.model.command.CreateChannel;
 import com.github.cssrumi.rchat.channel.model.command.DeleteChannel;
 import com.github.cssrumi.rchat.channel.model.payload.ChannelStatusPayload;
-import com.github.cssrumi.rchat.model.CommandHandler;
-import com.github.cssrumi.rchat.model.EventFactory;
+import com.github.cssrumi.rchat.common.CommandHandler;
+import com.github.cssrumi.rchat.common.EventFactory;
 import io.quarkus.vertx.ConsumeEvent;
 import io.smallrye.mutiny.Uni;
 import io.vertx.mutiny.core.eventbus.EventBus;
@@ -16,18 +15,16 @@ import java.time.OffsetDateTime;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import static com.github.cssrumi.rchat.model.TopicConstants.*;
+import static com.github.cssrumi.rchat.common.TopicConstants.*;
 
 @Singleton
-public class ChannelCommandHandler extends CommandHandler<Channel> {
+class ChannelCommandHandler extends CommandHandler<Channel> {
 
     private final EventFactory<Channel> eventFactory;
     private final ChannelRepository channelRepository;
 
     @Inject
-    public ChannelCommandHandler(EventBus eventBus,
-                                 EventFactory<Channel> eventFactory,
-                                 ChannelRepository channelRepository) {
+    ChannelCommandHandler(EventBus eventBus, EventFactory<Channel> eventFactory, ChannelRepository channelRepository) {
         super(eventBus);
         this.eventFactory = eventFactory;
         this.channelRepository = channelRepository;

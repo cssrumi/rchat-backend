@@ -1,8 +1,7 @@
-package com.github.cssrumi.rchat.user.handler;
+package com.github.cssrumi.rchat.user.process;
 
-import com.github.cssrumi.rchat.model.CommandHandler;
-import com.github.cssrumi.rchat.model.EventFactory;
-import com.github.cssrumi.rchat.user.UserRepository;
+import com.github.cssrumi.rchat.common.CommandHandler;
+import com.github.cssrumi.rchat.common.EventFactory;
 import com.github.cssrumi.rchat.user.model.Status;
 import com.github.cssrumi.rchat.user.model.User;
 import com.github.cssrumi.rchat.user.model.command.DeleteUser;
@@ -18,10 +17,10 @@ import java.time.OffsetDateTime;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import static com.github.cssrumi.rchat.model.TopicConstants.DELETE_USER_TOPIC;
-import static com.github.cssrumi.rchat.model.TopicConstants.REGISTER_USER_TOPIC;
-import static com.github.cssrumi.rchat.model.TopicConstants.USER_CREATED_TOPIC;
-import static com.github.cssrumi.rchat.model.TopicConstants.USER_DELETED_TOPIC;
+import static com.github.cssrumi.rchat.common.TopicConstants.DELETE_USER_TOPIC;
+import static com.github.cssrumi.rchat.common.TopicConstants.REGISTER_USER_TOPIC;
+import static com.github.cssrumi.rchat.common.TopicConstants.USER_CREATED_TOPIC;
+import static com.github.cssrumi.rchat.common.TopicConstants.USER_DELETED_TOPIC;
 
 @Singleton
 class UserCommandHandler extends CommandHandler<User> {

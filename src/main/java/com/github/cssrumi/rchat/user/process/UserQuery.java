@@ -1,5 +1,6 @@
-package com.github.cssrumi.rchat.user;
+package com.github.cssrumi.rchat.user.process;
 
+import com.github.cssrumi.rchat.user.UserConverter;
 import com.github.cssrumi.rchat.user.dto.UserInfo;
 import io.smallrye.mutiny.Uni;
 import java.util.List;
@@ -33,6 +34,14 @@ public class UserQuery {
                              .map(list -> list.stream()
                                               .map(UserConverter::toUserInfo)
                                               .collect(Collectors.toList()));
+    }
+
+    public Uni<Boolean> isUserExist(String username) {
+        return userRepository.isUserExist(username);
+    }
+
+    public Uni<Boolean> isEmailExist(String email) {
+        return userRepository.isEmailExist(email);
     }
 
 }

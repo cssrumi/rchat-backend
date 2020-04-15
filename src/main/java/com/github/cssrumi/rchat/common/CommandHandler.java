@@ -1,4 +1,4 @@
-package com.github.cssrumi.rchat.model;
+package com.github.cssrumi.rchat.common;
 
 import io.smallrye.mutiny.Uni;
 import io.vertx.mutiny.core.eventbus.EventBus;

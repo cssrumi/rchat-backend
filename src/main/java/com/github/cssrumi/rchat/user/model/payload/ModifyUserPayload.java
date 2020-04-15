@@ -1,6 +1,6 @@
 package com.github.cssrumi.rchat.user.model.payload;
 
-import com.github.cssrumi.rchat.model.Payload;
+import com.github.cssrumi.rchat.common.Payload;
 import com.github.cssrumi.rchat.user.model.Status;
 
 public class ModifyUserPayload implements Payload {

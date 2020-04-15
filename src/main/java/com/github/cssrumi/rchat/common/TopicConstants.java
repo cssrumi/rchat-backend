@@ -1,4 +1,4 @@
-package com.github.cssrumi.rchat.model;
+package com.github.cssrumi.rchat.common;
 
 public class TopicConstants {
     public static final String REGISTER_USER_TOPIC = "RegisterUser";

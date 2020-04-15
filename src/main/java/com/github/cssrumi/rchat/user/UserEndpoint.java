@@ -2,6 +2,7 @@ package com.github.cssrumi.rchat.user;
 
 import com.github.cssrumi.rchat.user.dto.UserRegistration;
 import com.github.cssrumi.rchat.user.model.command.UserCommandFactory;
+import com.github.cssrumi.rchat.user.process.UserQuery;
 import io.smallrye.mutiny.Uni;
 import io.vertx.mutiny.core.eventbus.EventBus;
 import java.util.Objects;
@@ -19,8 +20,8 @@ import org.jboss.resteasy.annotations.jaxrs.PathParam;
 import org.jboss.resteasy.annotations.jaxrs.QueryParam;
 import org.wildfly.common.annotation.Nullable;
 
-import static com.github.cssrumi.rchat.model.TopicConstants.DELETE_USER_TOPIC;
-import static com.github.cssrumi.rchat.model.TopicConstants.REGISTER_USER_TOPIC;
+import static com.github.cssrumi.rchat.common.TopicConstants.DELETE_USER_TOPIC;
+import static com.github.cssrumi.rchat.common.TopicConstants.REGISTER_USER_TOPIC;
 
 @Path("/v1/user")
 @Produces(MediaType.APPLICATION_JSON)

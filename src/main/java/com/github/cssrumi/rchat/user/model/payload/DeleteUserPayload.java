@@ -1,6 +1,6 @@
 package com.github.cssrumi.rchat.user.model.payload;
 
-import com.github.cssrumi.rchat.model.Payload;
+import com.github.cssrumi.rchat.common.Payload;
 
 public class DeleteUserPayload implements Payload {
 

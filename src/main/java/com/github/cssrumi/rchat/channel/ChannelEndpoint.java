@@ -3,6 +3,7 @@ package com.github.cssrumi.rchat.channel;
 import com.github.cssrumi.rchat.channel.dto.ChannelCreation;
 import com.github.cssrumi.rchat.channel.model.ChannelStatus;
 import com.github.cssrumi.rchat.channel.model.command.ChannelCommandFactory;
+import com.github.cssrumi.rchat.channel.process.ChannelQuery;
 import io.smallrye.mutiny.Uni;
 import io.vertx.mutiny.core.eventbus.EventBus;
 import java.util.Objects;
@@ -20,8 +21,8 @@ import org.jboss.resteasy.annotations.jaxrs.PathParam;
 import org.jboss.resteasy.annotations.jaxrs.QueryParam;
 import org.wildfly.common.annotation.Nullable;
 
-import static com.github.cssrumi.rchat.model.TopicConstants.CREATE_CHANNEL_TOPIC;
-import static com.github.cssrumi.rchat.model.TopicConstants.DELETE_CHANNEL_TOPIC;
+import static com.github.cssrumi.rchat.common.TopicConstants.CREATE_CHANNEL_TOPIC;
+import static com.github.cssrumi.rchat.common.TopicConstants.DELETE_CHANNEL_TOPIC;
 
 @Path("/v1/channel")
 @Produces(MediaType.APPLICATION_JSON)

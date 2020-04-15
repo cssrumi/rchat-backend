@@ -1,8 +1,10 @@
-package com.github.cssrumi.rchat.message.model;
+package com.github.cssrumi.rchat.message.model.event;
 
-import com.github.cssrumi.rchat.model.Command;
-import com.github.cssrumi.rchat.model.Event;
-import com.github.cssrumi.rchat.model.EventFactory;
+import com.github.cssrumi.rchat.common.Command;
+import com.github.cssrumi.rchat.common.Event;
+import com.github.cssrumi.rchat.common.EventFactory;
+import com.github.cssrumi.rchat.message.model.Message;
+import com.github.cssrumi.rchat.message.model.command.SendMessage;
 import java.time.OffsetDateTime;
 import javax.enterprise.context.ApplicationScoped;
 
