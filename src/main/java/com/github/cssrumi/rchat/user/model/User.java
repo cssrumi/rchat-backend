@@ -10,7 +10,6 @@ public class User extends ReactivePanacheMongoEntity {
     public Long createdAt;
     public String username;
     public String displayName;
-    public String password;
     public Status status;
     public String email;
 
@@ -23,7 +22,6 @@ public class User extends ReactivePanacheMongoEntity {
         private Long createdAt;
         private String username;
         private String displayName;
-        private String password;
         private Status status;
         private String email;
 
@@ -50,11 +48,6 @@ public class User extends ReactivePanacheMongoEntity {
             return this;
         }
 
-        public Builder password(String password) {
-            this.password = password;
-            return this;
-        }
-
         public Builder status(Status status) {
             this.status = status;
             return this;
@@ -70,7 +63,6 @@ public class User extends ReactivePanacheMongoEntity {
             user.createdAt = createdAt;
             user.displayName = displayName;
             user.username = username;
-            user.password = password;
             user.email = email;
             user.status = status;
 

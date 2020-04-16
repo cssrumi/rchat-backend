@@ -65,7 +65,6 @@ class UserCommandHandler extends CommandHandler<User> {
         return User.builder()
                    .createdAt(OffsetDateTime.now())
                    .username(payload.username)
-                   .password(payload.password)
                    .displayName(payload.displayName)
                    .status(Status.CREATED)
                    .email(payload.email)

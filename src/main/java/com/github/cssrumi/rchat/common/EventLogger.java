@@ -4,8 +4,12 @@ import com.github.cssrumi.rchat.channel.model.event.ChannelCreated;
 import com.github.cssrumi.rchat.channel.model.event.ChannelDeleted;
 import com.github.cssrumi.rchat.channel.model.event.ChannelStatusChanged;
 import com.github.cssrumi.rchat.message.model.event.MessageSent;
+import com.github.cssrumi.rchat.security.model.event.LoggedIn;
+import com.github.cssrumi.rchat.security.model.event.LoggedOut;
+import com.github.cssrumi.rchat.security.model.event.Unauthorized;
 import com.github.cssrumi.rchat.user.model.event.UserCreated;
 import com.github.cssrumi.rchat.user.model.event.UserDeleted;
+import com.github.cssrumi.rchat.user.model.event.UserModified;
 import io.quarkus.vertx.ConsumeEvent;
 import io.vertx.mutiny.core.eventbus.EventBus;
 import javax.inject.Inject;
@@ -55,5 +59,25 @@ public final class EventLogger {
     @ConsumeEvent(USER_DELETED_TOPIC)
     void consumeUserDeleted(UserDeleted event) {
         LOGGER.info("User deleted. Event: " + event);
+    }
+
+    @ConsumeEvent(USER_MODIFIED_TOPIC)
+    void consumeUserModified(UserModified event) {
+        LOGGER.info("User modified. Event: " + event);
+    }
+
+    @ConsumeEvent(UNAUTHORIZED_TOPIC)
+    void consumeUnauthorized(Unauthorized event) {
+        LOGGER.info("Unauthorized. Event: " + event);
+    }
+
+    @ConsumeEvent(USER_LOGGED_IN_TOPIC)
+    void consumeLoggedIn(LoggedIn event) {
+        LOGGER.info("LoggedIn. Event: " + event);
+    }
+
+    @ConsumeEvent(USER_LOGGED_OUT_TOPIC)
+    void consumeLoggedOut(LoggedOut event) {
+        LOGGER.info("LoggedOut. Event: " + event);
     }
 }

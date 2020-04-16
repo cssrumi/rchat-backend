@@ -1,18 +1,18 @@
 package com.github.cssrumi.rchat.user.model.event;
 
 import com.github.cssrumi.rchat.common.Event;
-import com.github.cssrumi.rchat.user.model.payload.RegisterUserPayload;
+import com.github.cssrumi.rchat.user.model.payload.ModifyUserPayload;
 import java.time.OffsetDateTime;
 
-public class UserCreated extends Event<RegisterUserPayload> {
+public class UserModified extends Event<ModifyUserPayload> {
 
-    public UserCreated(OffsetDateTime dateTime, RegisterUserPayload payload) {
-        super(dateTime, payload, UserCreated.class.getName());
+    public UserModified(OffsetDateTime dateTime, ModifyUserPayload payload) {
+        super(dateTime, payload, UserModified.class.getName());
     }
 
     @Override
     public String toString() {
-        return "UserCreated{" +
+        return "UserModified{" +
                 "dateTime=" + dateTime +
                 ", payload=" + payload +
                 ", eventType='" + eventType + '\'' +
