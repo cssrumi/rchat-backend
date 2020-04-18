@@ -1,6 +1,7 @@
 package com.github.cssrumi.rchat.security.process;
 
 import com.github.cssrumi.rchat.common.exception.UserNotFoundException;
+import com.github.cssrumi.rchat.security.model.UserSecurity;
 import io.quarkus.cache.CacheInvalidate;
 import io.quarkus.cache.CacheResult;
 import io.quarkus.mongodb.panache.reactive.ReactivePanacheMongoRepository;

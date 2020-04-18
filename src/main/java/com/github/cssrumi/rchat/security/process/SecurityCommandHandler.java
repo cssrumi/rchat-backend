@@ -1,12 +1,14 @@
 package com.github.cssrumi.rchat.security.process;
 
-import com.github.cssrumi.rchat.common.CommandHandler;
-import com.github.cssrumi.rchat.common.EventFactory;
+import com.github.cssrumi.rchat.common.RchatEventBus;
+import com.github.cssrumi.rchat.common.Try;
+import com.github.cssrumi.rchat.common.command.CommandHandler;
+import com.github.cssrumi.rchat.common.event.EventFactory;
+import com.github.cssrumi.rchat.security.model.UserSecurity;
 import com.github.cssrumi.rchat.security.model.command.Login;
 import com.github.cssrumi.rchat.security.model.command.Logout;
 import io.quarkus.vertx.ConsumeEvent;
 import io.smallrye.mutiny.Uni;
-import io.vertx.mutiny.core.eventbus.EventBus;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -23,9 +25,8 @@ class SecurityCommandHandler extends CommandHandler<UserSecurity> {
     private final EventFactory<UserSecurity> eventFactory;
 
     @Inject
-    public SecurityCommandHandler(EventBus eventBus, SecurityService securityService,
-                                  UserSecurityQuery userSecurityQuery,
-                                  EventFactory<UserSecurity> eventFactory) {
+    public SecurityCommandHandler(RchatEventBus eventBus, SecurityService securityService,
+                                  UserSecurityQuery userSecurityQuery, EventFactory<UserSecurity> eventFactory) {
         super(eventBus);
         this.securityService = securityService;
         this.userSecurityQuery = userSecurityQuery;
@@ -33,14 +34,14 @@ class SecurityCommandHandler extends CommandHandler<UserSecurity> {
     }
 
     @ConsumeEvent(LOGIN_USER_TOPIC)
-    Uni<String> loginUserHandler(Login command) {
-        return securityService.authenticate(command.getPayload().username, command.getPayload().password)
-                              .onItem().produceUni(ignore -> sendEvent(USER_LOGGED_IN_TOPIC, command, eventFactory))
-                              .onItem().produceUni(ignore -> userSecurityQuery.getToken(command.getPayload().username));
+    Uni<Try> loginUserHandler(Login command) {
+        return Try.raw(securityService.authenticate(command.getPayload().username, command.getPayload().password)
+                                      .onItem().produceUni(ignore -> sendEvent(USER_LOGGED_IN_TOPIC, command, eventFactory))
+                                      .onItem().produceUni(ignore -> userSecurityQuery.getToken(command.getPayload().username)));
     }
 
     @ConsumeEvent(LOGOUT_USER_TOPIC)
-    Uni<Void> logoutUserHandler(Logout command) {
-        return sendEvent(USER_LOGGED_OUT_TOPIC, command, eventFactory);
+    Uni<Try> logoutUserHandler(Logout command) {
+        return Try.raw(sendEvent(USER_LOGGED_OUT_TOPIC, command, eventFactory));
     }
 }

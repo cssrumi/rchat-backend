@@ -1,8 +1,8 @@
 package com.github.cssrumi.rchat.user.model.event;
 
-import com.github.cssrumi.rchat.common.Command;
-import com.github.cssrumi.rchat.common.Event;
-import com.github.cssrumi.rchat.common.EventFactory;
+import com.github.cssrumi.rchat.common.command.Command;
+import com.github.cssrumi.rchat.common.event.Event;
+import com.github.cssrumi.rchat.common.event.EventFactory;
 import com.github.cssrumi.rchat.user.model.User;
 import com.github.cssrumi.rchat.user.model.command.DeleteUser;
 import com.github.cssrumi.rchat.user.model.command.RegisterUser;

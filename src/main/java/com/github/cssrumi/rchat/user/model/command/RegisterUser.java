@@ -1,6 +1,6 @@
 package com.github.cssrumi.rchat.user.model.command;
 
-import com.github.cssrumi.rchat.common.Command;
+import com.github.cssrumi.rchat.common.command.Command;
 import com.github.cssrumi.rchat.user.model.payload.RegisterUserPayload;
 import java.time.OffsetDateTime;
 

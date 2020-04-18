@@ -1,6 +1,6 @@
 package com.github.cssrumi.rchat.security.model.command;
 
-import com.github.cssrumi.rchat.common.Command;
+import com.github.cssrumi.rchat.common.command.Command;
 import com.github.cssrumi.rchat.security.model.payload.LoginPayload;
 import java.time.OffsetDateTime;
 

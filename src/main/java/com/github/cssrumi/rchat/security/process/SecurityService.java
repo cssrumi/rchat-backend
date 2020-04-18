@@ -1,33 +1,37 @@
 package com.github.cssrumi.rchat.security.process;
 
+import com.github.cssrumi.rchat.common.RchatEventBus;
+import com.github.cssrumi.rchat.security.model.UserSecurity;
 import com.github.cssrumi.rchat.security.model.event.Unauthorized;
 import com.github.cssrumi.rchat.security.model.payload.UnauthorizedPayload;
 import com.github.cssrumi.rchat.user.model.payload.RegisterUserPayload;
 import io.quarkus.security.UnauthorizedException;
 import io.smallrye.mutiny.Uni;
 import io.vertx.core.http.HttpServerRequest;
-import io.vertx.mutiny.core.eventbus.EventBus;
 import java.time.OffsetDateTime;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static com.github.cssrumi.rchat.common.TopicConstants.UNAUTHORIZED_TOPIC;
 
 @ApplicationScoped
 public class SecurityService {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(SecurityService.class);
     static final int TOKEN_SIZE = 32;
     static final String AUTHORIZATION_HEADER = "Authorization";
     static final String BEARER = "Bearer";
     static final String INVALID_AUTHORIZATION_TYPE_MESSAGE = "Invalid authorization type...";
 
-    private final EventBus eventBus;
+    private final RchatEventBus eventBus;
     private final UserSecurityQuery userSecurityQuery;
 
     @Inject
-    public SecurityService(EventBus eventBus, UserSecurityQuery userSecurityQuery) {
+    public SecurityService(RchatEventBus eventBus, UserSecurityQuery userSecurityQuery) {
         this.eventBus = eventBus;
         this.userSecurityQuery = userSecurityQuery;
     }

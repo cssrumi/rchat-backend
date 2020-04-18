@@ -1,4 +1,4 @@
-package com.github.cssrumi.rchat.common;
+package com.github.cssrumi.rchat.common.event;
 
 import com.github.cssrumi.rchat.channel.model.event.ChannelCreated;
 import com.github.cssrumi.rchat.channel.model.event.ChannelDeleted;

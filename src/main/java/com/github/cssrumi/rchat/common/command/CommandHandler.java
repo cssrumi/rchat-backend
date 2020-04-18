@@ -1,14 +1,15 @@
-package com.github.cssrumi.rchat.common;
+package com.github.cssrumi.rchat.common.command;
 
+import com.github.cssrumi.rchat.common.RchatEventBus;
+import com.github.cssrumi.rchat.common.event.EventFactory;
 import io.smallrye.mutiny.Uni;
-import io.vertx.mutiny.core.eventbus.EventBus;
 import java.util.concurrent.CompletableFuture;
 
 public abstract class CommandHandler<T> {
 
-    protected final EventBus eventBus;
+    protected final RchatEventBus eventBus;
 
-    public CommandHandler(EventBus eventBus) {
+    public CommandHandler(RchatEventBus eventBus) {
         this.eventBus = eventBus;
     }
 

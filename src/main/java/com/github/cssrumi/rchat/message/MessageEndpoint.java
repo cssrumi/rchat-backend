@@ -1,5 +1,6 @@
 package com.github.cssrumi.rchat.message;
 
+import com.github.cssrumi.rchat.common.RchatEventBus;
 import com.github.cssrumi.rchat.message.dto.MessageDto;
 import com.github.cssrumi.rchat.message.model.command.MessageCommandFactory;
 import com.github.cssrumi.rchat.message.process.MessagePublisher;
@@ -7,7 +8,6 @@ import com.github.cssrumi.rchat.security.process.SecurityService;
 import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
 import io.vertx.core.http.HttpServerRequest;
-import io.vertx.mutiny.core.eventbus.EventBus;
 import javax.inject.Inject;
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
@@ -29,12 +29,12 @@ import static com.github.cssrumi.rchat.common.TopicConstants.SEND_MESSAGE_TOPIC;
 public class MessageEndpoint {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(MessageEndpoint.class);
-    private final EventBus eventBus;
+    private final RchatEventBus eventBus;
     private final MessagePublisher messagePublisher;
     private final SecurityService securityService;
 
     @Inject
-    public MessageEndpoint(EventBus eventBus, MessagePublisher messagePublisher,
+    public MessageEndpoint(RchatEventBus eventBus, MessagePublisher messagePublisher,
                            SecurityService securityService) {
         this.eventBus = eventBus;
         this.messagePublisher = messagePublisher;
@@ -45,8 +45,7 @@ public class MessageEndpoint {
     @Consumes(MediaType.APPLICATION_JSON)
     public Uni<Response> sendMessage(@Context HttpServerRequest request, @Valid MessageDto dto) {
         return securityService.authorize(request, dto.sendBy)
-                              .onItem()
-                              .produceUni(ignore -> eventBus.request(SEND_MESSAGE_TOPIC, MessageCommandFactory.sendMessage(dto)))
+                              .onItem().produceUni(ignore -> eventBus.request(SEND_MESSAGE_TOPIC, MessageCommandFactory.sendMessage(dto)))
                               .map(result -> Response.status(201).build());
     }
 

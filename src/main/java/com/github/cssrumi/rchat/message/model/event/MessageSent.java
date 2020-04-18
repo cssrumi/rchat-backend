@@ -1,6 +1,6 @@
 package com.github.cssrumi.rchat.message.model.event;
 
-import com.github.cssrumi.rchat.common.Event;
+import com.github.cssrumi.rchat.common.event.Event;
 import com.github.cssrumi.rchat.message.model.MessagePayload;
 import java.time.OffsetDateTime;
 

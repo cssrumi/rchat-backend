@@ -6,11 +6,13 @@ import com.github.cssrumi.rchat.channel.model.command.ChangeChannelStatus;
 import com.github.cssrumi.rchat.channel.model.command.CreateChannel;
 import com.github.cssrumi.rchat.channel.model.command.DeleteChannel;
 import com.github.cssrumi.rchat.channel.model.payload.ChannelStatusPayload;
-import com.github.cssrumi.rchat.common.CommandHandler;
-import com.github.cssrumi.rchat.common.EventFactory;
+import com.github.cssrumi.rchat.common.RchatEventBus;
+import com.github.cssrumi.rchat.common.Try;
+import com.github.cssrumi.rchat.common.command.CommandHandler;
+import com.github.cssrumi.rchat.common.event.EventFactory;
+import com.github.cssrumi.rchat.common.exception.ResourceAlreadyExistsException;
 import io.quarkus.vertx.ConsumeEvent;
 import io.smallrye.mutiny.Uni;
-import io.vertx.mutiny.core.eventbus.EventBus;
 import java.time.OffsetDateTime;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -24,43 +26,43 @@ class ChannelCommandHandler extends CommandHandler<Channel> {
     private final ChannelRepository channelRepository;
 
     @Inject
-    ChannelCommandHandler(EventBus eventBus, EventFactory<Channel> eventFactory, ChannelRepository channelRepository) {
+    ChannelCommandHandler(RchatEventBus eventBus, EventFactory<Channel> eventFactory, ChannelRepository channelRepository) {
         super(eventBus);
         this.eventFactory = eventFactory;
         this.channelRepository = channelRepository;
     }
 
     @ConsumeEvent(CREATE_CHANNEL_TOPIC)
-    Uni<Void> createChannelHandler(CreateChannel command) {
+    Uni<Try> createChannelHandler(CreateChannel command) {
         final String name = command.getPayload().name;
-        return channelRepository.isChannelExist(name)
-                                .map(result -> createChannel(result, name))
-                                .onItem().produceUni(channel -> channelRepository.persist(channel))
-                                .onItem().produceUni(result -> sendEvent(CHANNEL_CREATED_TOPIC, command, eventFactory));
+        return Try.raw(channelRepository.isChannelExist(name)
+                                         .map(result -> createChannel(result, name))
+                                         .onItem().produceUni(channel -> channelRepository.persist(channel))
+                                         .onItem().produceUni(result -> sendEvent(CHANNEL_CREATED_TOPIC, command, eventFactory)));
     }
 
     @ConsumeEvent(DELETE_CHANNEL_TOPIC)
-    Uni<Void> deleteChannelHandler(DeleteChannel command) {
-        return channelRepository.findByName(command.getPayload().name)
-                                .onItem().produceUni(channel -> channelRepository.delete(channel))
-                                .onItem().produceUni(result -> sendEvent(CHANNEL_DELETED_TOPIC, command, eventFactory));
+    Uni<Try> deleteChannelHandler(DeleteChannel command) {
+        return Try.raw(channelRepository.findByName(command.getPayload().name)
+                                         .onItem().produceUni(channel -> channelRepository.delete(channel))
+                                         .onItem().produceUni(result -> sendEvent(CHANNEL_DELETED_TOPIC, command, eventFactory)));
     }
 
     @ConsumeEvent(CHANGE_CHANNEL_STATUS_TOPIC)
-    Uni<Void> changeChannelStatusHandler(ChangeChannelStatus command) {
+    Uni<Try> changeChannelStatusHandler(ChangeChannelStatus command) {
         final ChannelStatusPayload payload = command.getPayload();
-        return channelRepository.findByName(payload.channel)
-                                .onItem()
-                                .produceUni(channel -> {
-                                    channel.status = payload.newStatus;
-                                    return channelRepository.update(channel);
-                                })
-                                .onItem().produceUni(result -> sendEvent(CHANNEL_STATUS_CHANGED_TOPIC, command, eventFactory));
+        return Try.raw(channelRepository.findByName(payload.channel)
+                                         .onItem()
+                                         .produceUni(channel -> {
+                                             channel.status = payload.newStatus;
+                                             return channelRepository.update(channel);
+                                         })
+                                         .onItem().produceUni(result -> sendEvent(CHANNEL_STATUS_CHANGED_TOPIC, command, eventFactory)));
     }
 
     Channel createChannel(Boolean result, String name) {
         if (result) {
-            throw new RuntimeException("Channel already exists");
+            throw ResourceAlreadyExistsException.fromResource(Channel.class);
         }
 
         Channel channel = new Channel();

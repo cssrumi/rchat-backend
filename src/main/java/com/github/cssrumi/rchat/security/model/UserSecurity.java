@@ -1,10 +1,10 @@
-package com.github.cssrumi.rchat.security.process;
+package com.github.cssrumi.rchat.security.model;
 
 import io.quarkus.mongodb.panache.MongoEntity;
 import io.quarkus.mongodb.panache.reactive.ReactivePanacheMongoEntity;
 
 @MongoEntity(collection = "Security")
-class UserSecurity extends ReactivePanacheMongoEntity {
+public class UserSecurity extends ReactivePanacheMongoEntity {
 
     public String username;
     public String password;

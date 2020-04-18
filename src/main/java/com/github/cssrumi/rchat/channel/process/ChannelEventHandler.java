@@ -5,12 +5,12 @@ import com.github.cssrumi.rchat.channel.model.command.ChangeChannelStatus;
 import com.github.cssrumi.rchat.channel.model.event.ChannelDeleted;
 import com.github.cssrumi.rchat.channel.model.event.ChannelStatusChanged;
 import com.github.cssrumi.rchat.channel.model.payload.ChannelStatusPayload;
+import com.github.cssrumi.rchat.common.RchatEventBus;
 import com.github.cssrumi.rchat.message.model.event.MessageSent;
 import io.quarkus.vertx.ConsumeEvent;
 import io.smallrye.mutiny.Uni;
 import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
-import io.vertx.mutiny.core.eventbus.EventBus;
 import java.time.OffsetDateTime;
 import java.util.concurrent.CompletableFuture;
 import javax.enterprise.context.ApplicationScoped;
@@ -25,11 +25,11 @@ import static com.github.cssrumi.rchat.common.TopicConstants.MESSAGE_SENT_TOPIC;
 class ChannelEventHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ChannelEventHandler.class);
-    private final EventBus eventBus;
+    private final RchatEventBus eventBus;
     private final ChannelQuery channelQuery;
 
     @Inject
-    public ChannelEventHandler(EventBus eventBus, ChannelQuery channelQuery) {
+    public ChannelEventHandler(RchatEventBus eventBus, ChannelQuery channelQuery) {
         this.eventBus = eventBus;
         this.channelQuery = channelQuery;
     }

@@ -1,6 +1,6 @@
 package com.github.cssrumi.rchat.user.model.event;
 
-import com.github.cssrumi.rchat.common.Event;
+import com.github.cssrumi.rchat.common.event.Event;
 import com.github.cssrumi.rchat.user.model.payload.ModifyUserPayload;
 import java.time.OffsetDateTime;
 

@@ -1,5 +1,6 @@
-package com.github.cssrumi.rchat.common;
+package com.github.cssrumi.rchat.common.event;
 
+import com.github.cssrumi.rchat.common.Payload;
 import java.time.OffsetDateTime;
 
 public abstract class Event<P extends Payload> {

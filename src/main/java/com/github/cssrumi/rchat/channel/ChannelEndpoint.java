@@ -4,8 +4,8 @@ import com.github.cssrumi.rchat.channel.dto.ChannelCreation;
 import com.github.cssrumi.rchat.channel.model.ChannelStatus;
 import com.github.cssrumi.rchat.channel.model.command.ChannelCommandFactory;
 import com.github.cssrumi.rchat.channel.process.ChannelQuery;
+import com.github.cssrumi.rchat.common.RchatEventBus;
 import io.smallrye.mutiny.Uni;
-import io.vertx.mutiny.core.eventbus.EventBus;
 import java.util.Objects;
 import javax.inject.Inject;
 import javax.validation.Valid;
@@ -29,10 +29,10 @@ import static com.github.cssrumi.rchat.common.TopicConstants.DELETE_CHANNEL_TOPI
 public class ChannelEndpoint {
 
     private final ChannelQuery query;
-    private final EventBus eventBus;
+    private final RchatEventBus eventBus;
 
     @Inject
-    public ChannelEndpoint(ChannelQuery query, EventBus eventBus) {
+    public ChannelEndpoint(ChannelQuery query, RchatEventBus eventBus) {
         this.query = query;
         this.eventBus = eventBus;
     }
@@ -58,13 +58,13 @@ public class ChannelEndpoint {
     @Consumes(MediaType.APPLICATION_JSON)
     public Uni<Response> createNewChannel(@Valid ChannelCreation dto) {
         return eventBus.request(CREATE_CHANNEL_TOPIC, ChannelCommandFactory.createChannel(dto))
-                       .map(result -> Response.status(201).build());
+                       .map(ignore -> Response.status(201).build());
     }
 
     @DELETE
     @Path("/{channel}")
     public Uni<Response> deleteChannel(@PathParam String channel) {
         return eventBus.request(DELETE_CHANNEL_TOPIC, ChannelCommandFactory.deleteChannel(channel))
-                       .map(result -> Response.ok().build());
+                       .map(ignore -> Response.ok().build());
     }
 }

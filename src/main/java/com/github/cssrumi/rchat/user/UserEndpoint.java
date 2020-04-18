@@ -1,10 +1,10 @@
 package com.github.cssrumi.rchat.user;
 
+import com.github.cssrumi.rchat.common.RchatEventBus;
 import com.github.cssrumi.rchat.user.dto.UserRegistration;
 import com.github.cssrumi.rchat.user.model.command.UserCommandFactory;
 import com.github.cssrumi.rchat.user.process.UserQuery;
 import io.smallrye.mutiny.Uni;
-import io.vertx.mutiny.core.eventbus.EventBus;
 import java.util.Objects;
 import javax.inject.Inject;
 import javax.validation.Valid;
@@ -27,11 +27,11 @@ import static com.github.cssrumi.rchat.common.TopicConstants.REGISTER_USER_TOPIC
 @Produces(MediaType.APPLICATION_JSON)
 public class UserEndpoint {
 
-    private final EventBus eventBus;
+    private final RchatEventBus eventBus;
     private final UserQuery userQuery;
 
     @Inject
-    public UserEndpoint(EventBus eventBus, UserQuery userQuery) {
+    public UserEndpoint(RchatEventBus eventBus, UserQuery userQuery) {
         this.eventBus = eventBus;
         this.userQuery = userQuery;
     }

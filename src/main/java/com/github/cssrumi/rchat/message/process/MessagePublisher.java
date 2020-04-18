@@ -11,7 +11,7 @@ public class MessagePublisher {
 
     private final PublishSubject<Message> messageSubject = PublishSubject.create();
 
-    public void emmit(Message message) {
+    void emmit(Message message) {
         messageSubject.onNext(message);
     }
 

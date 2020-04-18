@@ -1,12 +1,11 @@
-package com.github.cssrumi.rchat.security.process;
+package com.github.cssrumi.rchat.security.model.event;
 
-import com.github.cssrumi.rchat.common.Command;
-import com.github.cssrumi.rchat.common.Event;
-import com.github.cssrumi.rchat.common.EventFactory;
+import com.github.cssrumi.rchat.common.command.Command;
+import com.github.cssrumi.rchat.common.event.Event;
+import com.github.cssrumi.rchat.common.event.EventFactory;
+import com.github.cssrumi.rchat.security.model.UserSecurity;
 import com.github.cssrumi.rchat.security.model.command.Login;
 import com.github.cssrumi.rchat.security.model.command.Logout;
-import com.github.cssrumi.rchat.security.model.event.LoggedIn;
-import com.github.cssrumi.rchat.security.model.event.LoggedOut;
 import java.time.OffsetDateTime;
 import javax.inject.Singleton;
 

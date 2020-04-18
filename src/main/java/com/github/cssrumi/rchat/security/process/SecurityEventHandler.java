@@ -1,10 +1,10 @@
 package com.github.cssrumi.rchat.security.process;
 
+import com.github.cssrumi.rchat.common.RchatEventBus;
 import com.github.cssrumi.rchat.user.model.event.UserDeleted;
 import com.github.cssrumi.rchat.user.model.event.UserModified;
 import io.quarkus.vertx.ConsumeEvent;
 import io.smallrye.mutiny.Uni;
-import io.vertx.mutiny.core.eventbus.EventBus;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import org.slf4j.Logger;
@@ -17,11 +17,11 @@ import static com.github.cssrumi.rchat.common.TopicConstants.USER_MODIFIED_TOPIC
 class SecurityEventHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SecurityEventHandler.class);
-    private final EventBus eventBus;
+    private final RchatEventBus eventBus;
     private final UserSecurityQuery userSecurityQuery;
 
     @Inject
-    SecurityEventHandler(EventBus eventBus, UserSecurityQuery userSecurityQuery) {
+    SecurityEventHandler(RchatEventBus eventBus, UserSecurityQuery userSecurityQuery) {
         this.eventBus = eventBus;
         this.userSecurityQuery = userSecurityQuery;
     }

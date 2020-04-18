@@ -4,9 +4,9 @@ import com.github.cssrumi.rchat.channel.model.Channel;
 import com.github.cssrumi.rchat.channel.model.command.ChangeChannelStatus;
 import com.github.cssrumi.rchat.channel.model.command.CreateChannel;
 import com.github.cssrumi.rchat.channel.model.command.DeleteChannel;
-import com.github.cssrumi.rchat.common.Command;
-import com.github.cssrumi.rchat.common.Event;
-import com.github.cssrumi.rchat.common.EventFactory;
+import com.github.cssrumi.rchat.common.command.Command;
+import com.github.cssrumi.rchat.common.event.Event;
+import com.github.cssrumi.rchat.common.event.EventFactory;
 import java.time.OffsetDateTime;
 import javax.enterprise.context.ApplicationScoped;
 
