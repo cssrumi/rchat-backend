@@ -25,13 +25,13 @@ import static com.github.cssrumi.rchat.common.TopicConstants.REGISTER_USER_TOPIC
 
 @Path("/v1/user")
 @Produces(MediaType.APPLICATION_JSON)
-public class UserEndpoint {
+class UserEndpoint {
 
     private final RchatEventBus eventBus;
     private final UserQuery userQuery;
 
     @Inject
-    public UserEndpoint(RchatEventBus eventBus, UserQuery userQuery) {
+    UserEndpoint(RchatEventBus eventBus, UserQuery userQuery) {
         this.eventBus = eventBus;
         this.userQuery = userQuery;
     }

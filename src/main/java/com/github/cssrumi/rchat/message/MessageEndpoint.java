@@ -2,6 +2,7 @@ package com.github.cssrumi.rchat.message;
 
 import com.github.cssrumi.rchat.common.RchatEventBus;
 import com.github.cssrumi.rchat.message.dto.MessageDto;
+import com.github.cssrumi.rchat.message.dto.MessageRequest;
 import com.github.cssrumi.rchat.message.model.command.MessageCommandFactory;
 import com.github.cssrumi.rchat.message.process.MessagePublisher;
 import com.github.cssrumi.rchat.security.process.SecurityService;
@@ -42,10 +43,14 @@ public class MessageEndpoint {
     }
 
     @POST
+    @Path("/{channel}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Uni<Response> sendMessage(@Context HttpServerRequest request, @Valid MessageDto dto) {
-        return securityService.authorize(request, dto.sendBy)
-                              .onItem().produceUni(ignore -> eventBus.request(SEND_MESSAGE_TOPIC, MessageCommandFactory.sendMessage(dto)))
+    public Uni<Response> sendMessage(@Context HttpServerRequest request, @Valid MessageRequest dto, @PathParam String channel) {
+        return securityService.authorize(request)
+                              .onItem()
+                              .produceUni(username -> eventBus
+                                      .request(SEND_MESSAGE_TOPIC, MessageCommandFactory
+                                              .sendMessage(dto, channel, username)))
                               .map(result -> Response.status(201).build());
     }
 

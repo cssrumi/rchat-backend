@@ -38,7 +38,7 @@ public class AuthorizationEndpoint {
     @Path("/login")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Uni<Response> login(@Context HttpServerRequest request, @Valid LoginDto dto) {
+    public Uni<Response> login(@Valid LoginDto dto) {
         return eventBus.request(LOGIN_USER_TOPIC, SecurityCommandFactory.from(dto))
                        .map(message -> new LoginResponse((String) message))
                        .map(response -> Response.ok(response).build());
@@ -48,7 +48,7 @@ public class AuthorizationEndpoint {
     @Path("/logout/{username}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Uni<Response> logout(@Context HttpServerRequest request, @PathParam String username) {
-        return securityService.authorize(request, username)
+        return securityService.authorize(request)
                               .onItem().produceUni(ignore -> eventBus.request(LOGOUT_USER_TOPIC, SecurityCommandFactory.from(username)))
                               .map(ignore -> Response.ok().build());
     }

@@ -1,7 +1,5 @@
 package com.github.cssrumi.rchat.common;
 
-import com.github.cssrumi.rchat.channel.model.command.ChangeChannelStatus;
-import com.github.cssrumi.rchat.common.Try;
 import io.smallrye.mutiny.Uni;
 import io.vertx.mutiny.core.eventbus.EventBus;
 import javax.enterprise.context.Dependent;

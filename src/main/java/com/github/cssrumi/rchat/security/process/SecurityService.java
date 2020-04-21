@@ -7,6 +7,7 @@ import com.github.cssrumi.rchat.security.model.payload.UnauthorizedPayload;
 import com.github.cssrumi.rchat.user.model.payload.RegisterUserPayload;
 import io.quarkus.security.UnauthorizedException;
 import io.smallrye.mutiny.Uni;
+import io.smallrye.mutiny.tuples.Tuple2;
 import io.vertx.core.http.HttpServerRequest;
 import java.time.OffsetDateTime;
 import javax.enterprise.context.ApplicationScoped;
@@ -24,8 +25,12 @@ public class SecurityService {
     private static final Logger LOGGER = LoggerFactory.getLogger(SecurityService.class);
     static final int TOKEN_SIZE = 32;
     static final String AUTHORIZATION_HEADER = "Authorization";
+    static final String USERNAME_HEADER = "Username";
     static final String BEARER = "Bearer";
     static final String INVALID_AUTHORIZATION_TYPE_MESSAGE = "Invalid authorization type...";
+    static final String INVALID_TOKEN_MESSAGE = "Unauthorized request occurred. Invalid token.";
+    static final String INVALID_PASSWORD_MESSAGE = "Unauthorized request occurred. Invalid password.";
+    static final String INVALID_USERNAME_MESSAGE = "Empty username occurred.";
 
     private final RchatEventBus eventBus;
     private final UserSecurityQuery userSecurityQuery;
@@ -43,11 +48,11 @@ public class SecurityService {
                   .produceUni(userSecurity -> userSecurity.persist());
     }
 
-    public Uni<Void> authorize(HttpServerRequest request, String username) {
+    public Uni<String> authorize(HttpServerRequest request) {
         return Uni.createFrom()
-                  .item(getToken(request))
+                  .item(getTokenAndUsername(request))
                   .onItem()
-                  .produceUni(token -> verifyToken(username, token));
+                  .produceUni(tokenAndUsername -> verifyToken(tokenAndUsername));
     }
 
     Uni<Void> authenticate(String username, String password) {
@@ -72,24 +77,37 @@ public class SecurityService {
         return userSecurity;
     }
 
+    private Tuple2<String, String> getTokenAndUsername(HttpServerRequest request) {
+        return Tuple2.of(getToken(request), getUsername(request));
+    }
+
+    public String getUsername(HttpServerRequest request) {
+        final String username = request.getHeader(USERNAME_HEADER).strip();
+        if (StringUtils.isEmpty(username)) {
+            unauthorized(INVALID_USERNAME_MESSAGE);
+        }
+
+        return username;
+    }
+
     private String getToken(HttpServerRequest request) {
-        String token = request.getHeader(AUTHORIZATION_HEADER);
-        if (!token.startsWith(BEARER)) {
+        final String rawToken = request.getHeader(AUTHORIZATION_HEADER);
+        if (!rawToken.startsWith(BEARER)) {
             unauthorized(INVALID_AUTHORIZATION_TYPE_MESSAGE);
         }
 
-        return StringUtils.stripStart(token, BEARER).strip();
+        return StringUtils.stripStart(rawToken, BEARER).strip();
     }
 
-    private Uni<Void> verifyToken(String username, String token) {
-        return userSecurityQuery.getToken(username)
+    private Uni<String> verifyToken(Tuple2<String, String> tokenAndUsername) {
+        return userSecurityQuery.getToken(tokenAndUsername.getItem2())
                                 .onItem()
                                 .apply(userToken -> {
-                                    if (!token.equals(userToken)) {
-                                        throw new UnauthorizedException();
+                                    if (!tokenAndUsername.getItem1().equals(userToken)) {
+                                        unauthorized(INVALID_TOKEN_MESSAGE);
                                     }
 
-                                    return null;
+                                    return tokenAndUsername.getItem2();
                                 });
     }
 
@@ -98,7 +116,7 @@ public class SecurityService {
                                 .onItem()
                                 .apply(userPassword -> {
                                     if (!password.equals(userPassword)) {
-                                        throw new UnauthorizedException();
+                                        unauthorized(INVALID_PASSWORD_MESSAGE);
                                     }
 
                                     return null;

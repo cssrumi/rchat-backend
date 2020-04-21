@@ -10,8 +10,8 @@ public class MessageConverter {
 
     public static MessageDto dto(Message message) {
         MessageDto dto = new MessageDto();
+        dto.id = message.id.toString();
         dto.message = message.message;
-        dto.channel = message.channel;
         dto.sendAt = message.sentAt;
         dto.sendBy = message.sentBy;
 
