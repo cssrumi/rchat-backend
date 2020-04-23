@@ -45,11 +45,11 @@ public class AuthorizationEndpoint {
     }
 
     @GET
-    @Path("/logout/{username}")
+    @Path("/logout")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Uni<Response> logout(@Context HttpServerRequest request, @PathParam String username) {
+    public Uni<Response> logout(@Context HttpServerRequest request) {
         return securityService.authorize(request)
-                              .onItem().produceUni(ignore -> eventBus.request(LOGOUT_USER_TOPIC, SecurityCommandFactory.from(username)))
+                              .onItem().produceUni(username -> eventBus.request(LOGOUT_USER_TOPIC, SecurityCommandFactory.from(username)))
                               .map(ignore -> Response.ok().build());
     }
 }

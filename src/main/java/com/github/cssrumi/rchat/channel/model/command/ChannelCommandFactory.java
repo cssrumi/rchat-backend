@@ -1,6 +1,6 @@
 package com.github.cssrumi.rchat.channel.model.command;
 
-import com.github.cssrumi.rchat.channel.dto.ChannelCreation;
+import com.github.cssrumi.rchat.channel.dto.ChannelRequest;
 import com.github.cssrumi.rchat.channel.model.ChannelStatus;
 import com.github.cssrumi.rchat.channel.model.payload.ChannelPayload;
 import com.github.cssrumi.rchat.channel.model.payload.ChannelStatusPayload;
@@ -11,7 +11,7 @@ public class ChannelCommandFactory {
     private ChannelCommandFactory() {
     }
 
-    public static CreateChannel createChannel(ChannelCreation dto) {
+    public static CreateChannel createChannel(ChannelRequest dto) {
         ChannelPayload payload = new ChannelPayload(dto.name);
         return new CreateChannel(OffsetDateTime.now(), payload);
     }

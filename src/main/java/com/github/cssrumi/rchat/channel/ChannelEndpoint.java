@@ -1,14 +1,12 @@
 package com.github.cssrumi.rchat.channel;
 
-import com.github.cssrumi.rchat.channel.dto.ChannelCreation;
+import com.github.cssrumi.rchat.channel.dto.ChannelRequest;
 import com.github.cssrumi.rchat.channel.model.ChannelStatus;
 import com.github.cssrumi.rchat.channel.model.command.ChannelCommandFactory;
 import com.github.cssrumi.rchat.channel.process.ChannelPublisher;
 import com.github.cssrumi.rchat.channel.process.ChannelQuery;
 import com.github.cssrumi.rchat.common.RchatEventBus;
 import com.github.cssrumi.rchat.common.event.Event;
-import com.github.cssrumi.rchat.message.MessageConverter;
-import com.github.cssrumi.rchat.message.dto.MessageDto;
 import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
 import java.util.Objects;
@@ -64,7 +62,7 @@ public class ChannelEndpoint {
     @POST
     @Path("/channel")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Uni<Response> createNewChannel(@Valid ChannelCreation dto) {
+    public Uni<Response> createNewChannel(@Valid ChannelRequest dto) {
         return eventBus.request(CREATE_CHANNEL_TOPIC, ChannelCommandFactory.createChannel(dto))
                        .map(ignore -> Response.status(201).build());
     }
