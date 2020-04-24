@@ -5,13 +5,17 @@ import io.reactivex.subjects.PublishSubject;
 import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.converters.multi.MultiRxConverters;
 import javax.enterprise.context.ApplicationScoped;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @ApplicationScoped
 public class MessagePublisher {
 
+    public static final Logger LOGGER = LoggerFactory.getLogger(MessagePublisher.class);
     private final PublishSubject<Message> messageSubject = PublishSubject.create();
 
     void emmit(Message message) {
+        LOGGER.info("New message has been emitted");
         messageSubject.onNext(message);
     }
 
