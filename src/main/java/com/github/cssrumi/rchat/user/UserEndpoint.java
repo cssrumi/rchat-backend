@@ -25,7 +25,7 @@ import static com.github.cssrumi.rchat.common.TopicConstants.REGISTER_USER_TOPIC
 
 @Path("/v1/user")
 @Produces(MediaType.APPLICATION_JSON)
-class UserEndpoint {
+public class UserEndpoint {
 
     private final RchatEventBus eventBus;
     private final UserQuery userQuery;
